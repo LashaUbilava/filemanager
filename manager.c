@@ -7,12 +7,42 @@
 
 FILE *file;
 
+void create_json(char *path){
+    char name_file[50];
+    char final_path[512];
+    char dir_path[250];
+    char content[256];
+    char* first_path = "file";
+    char* end_path = ".json";
+    if (mkdir(first_path, 0775) !=0 && errno != EEXIST){    
+        perror("Error");
+        return;
+    }
+    printf("Выберите путь, куда вы хотите записать файл(Пример ввода путь/путь): ");
+    scanf("%255s", path);
+    snprintf(dir_path, sizeof(dir_path), "%s/%s", first_path, path);
+    if (mkdir(dir_path, 0775) != 0 && errno != EEXIST){    
+        perror("Error");
+        return;
+    }
+    printf("Введите название текстового файла: ");
+    scanf("%49s", name_file);
+    snprintf(final_path, sizeof(final_path), "%s/%s/%s%s", first_path, path, name_file, end_path);
+    file = fopen(final_path, "w");
+    printf("Введите любой текст: ");
+    scanf("%255s", content);
+    fprintf(file, "%s", content);
+    fclose(file);
+    return;
+}
+
 
 void create_file(char *path){
     char name_file[50];
     char final_path[256];
     char dir_path[250];
     char content[256];
+    char* end_path = ".txt";
     char* first_path = "file";
     if (mkdir(first_path, 0775) !=0 && errno != EEXIST){    
         perror("Error");
@@ -27,7 +57,7 @@ void create_file(char *path){
     }
     printf("Введите название текстового файла: ");
     scanf("%49s", name_file);
-    snprintf(final_path, sizeof(final_path), "%s/%s/%s", first_path, path, name_file);
+    snprintf(final_path, sizeof(final_path), "%s/%s/%s%s", first_path, path, name_file, end_path);
     file = fopen(final_path, "w");
     printf("Введите любой текст: ");
     scanf("%255s", content);
@@ -118,10 +148,13 @@ int main(void){
     else if (choice1 == 2){
        autorization(login,  password);
     }
-    printf("Выберите действие: 1. Записать текстовый файл\n");
+    printf("Выберите действие: 1. Записать текстовый файл\n2. Записать JSON-файл");
     scanf("%d", &choice2);
     if (choice2 == 1){
         create_file(path);
+    }
+    if (choice2 == 2){
+        create_json(path);
     }
     return 0;
 }
