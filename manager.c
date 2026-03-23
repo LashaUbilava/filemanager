@@ -29,9 +29,13 @@ void create_json(char *path){
     scanf("%49s", name_file);
     snprintf(final_path, sizeof(final_path), "%s/%s/%s%s", first_path, path, name_file, end_path);
     file = fopen(final_path, "w");
-    printf("Введите любой текст: ");
-    scanf("%255s", content);
-    fprintf(file, "%s", content);
+    printf("Введите любой текст(После переноса строки CTRL+D для выхода из редактора): ");
+    while(1){
+        if (fgets(content, sizeof(content), stdin) == NULL){
+            break;
+        }
+        fprintf(file, "%s", content);
+    }
     fclose(file);
     return;
 }
@@ -59,9 +63,13 @@ void create_file(char *path){
     scanf("%49s", name_file);
     snprintf(final_path, sizeof(final_path), "%s/%s/%s%s", first_path, path, name_file, end_path);
     file = fopen(final_path, "w");
-    printf("Введите любой текст: ");
-    scanf("%255s", content);
-    fprintf(file, "%s", content);
+    printf("Введите любой текст(После переноса строки CTRL+D для выхода из редактора): ");
+    while(1){
+        if (fgets(content, sizeof(content), stdin) == NULL){
+            break;
+        }
+        fprintf(file, "%s", content);
+    }
     fclose(file);
     return;
 }
