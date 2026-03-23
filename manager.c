@@ -36,6 +36,7 @@ void create_json(char *path){
         }
         fprintf(file, "%s", content);
     }
+    fclose(file);
     return;
 }
 
